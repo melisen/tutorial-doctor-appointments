@@ -5,10 +5,10 @@ const id = req.params.id;
 try {
     const updatedUser = await User.findByIdAndUpdate(id, {$set:req.body}, {new:true});
     res.status(200).json({succes:true, message: 'Succesfully updated', data:updatedUser});
-    //para hacer el update, se envía un objeto que solo contiene las claves-valor que se deseen modificar: ej. {"role":"doctor"}
+    //para hacer el update, se envía en body un objeto que solo contiene las claves-valor que se deseen modificar: ej. {"role":"doctor"}
     
 } catch (error) {
-    res.status(500).json({succes:false, message: 'failed tu update', data:updatedUser});
+    res.status(500).json({succes:false, message: 'failed tu update'});
 
 }
 }
@@ -17,7 +17,7 @@ try {
 export const deleteUser = async (req, res)=>{
 const id = req.params.id;
 try {
-    const updatedUser = await User.findByIdAndDelete(id);
+    const deleteUser = await User.findByIdAndDelete(id);
     res.status(200).json({succes:true, message: 'Succesfully deleted'});
 
     
@@ -41,7 +41,7 @@ export const getSingleUser = async (req, res)=>{
     }
 
     export const getAllUsers = async (req, res)=>{
-        const id = req.params.id;
+
         try {
             //buscar todos los usuarios pero que no envíe datos sensibles (contraseña)
             const users = await User.find({}).select("-password");
